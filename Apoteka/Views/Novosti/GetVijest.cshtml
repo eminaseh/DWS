@@ -1,0 +1,31 @@
+﻿@model Vijest
+
+@{
+    ViewData["Title"] = "Get by id";
+}
+
+
+<a asp-action="index" class="btn btn-primary mt-5 ml-5">Nazad</a>
+
+<form method="post">
+    <div class="form-group">
+        <label for="id"></label>
+        <input placeholder="Unesi id vijesti" class="form-control m-5" name="id" />
+    </div>
+    <div class="text-center panel-body">
+        <button type="submit" class="btn btn-sm btn-primary m-1">Ok</button>
+    </div>
+</form>
+
+@if (Model != null)
+{
+
+    <p class="text-center m-5">Id :@Model.Id</p>
+    <h3 class="text-center m-5">@Model.Naslov</h3>
+    <h5 class="text-center m-5">@Model.Opis</h5>
+    <hr />
+
+
+
+}
+

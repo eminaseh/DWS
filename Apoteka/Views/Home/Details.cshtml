@@ -1,0 +1,42 @@
+﻿@model HomeDetailsViewModel
+
+@{
+
+    ViewData["Title"] = "Detalji uposlenika";
+    var photoPath = "~/Images/" + (Model.Uposlenik.Slika ?? "avtar.png");
+
+}
+
+<h3 class="text-center text-secondary m-5">@Model.PageTitle</h3>
+
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header text-secondary">
+                <h1>@Model.Uposlenik.Ime  @Model.Uposlenik.Prezime</h1>
+            </div>
+
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+                <h4 class="text-secondary m-2">Email : @Model.Uposlenik.Email</h4>
+                <h4 class="text-secondary m-2">Radno mjesto: @Html.DisplayFor(Model => Model.Uposlenik.RadnoMjesto)</h4>
+            </div>
+
+            <div class="card-footer text-center">
+                <a asp-controller="home" asp-action="index" class="btn btn-primary">Nazad</a>
+                @if (User.IsInRole("Admin") || User.IsInRole("Uposlenik"))
+                {
+
+                    <a asp-action="edit" asp-controller="home" asp-route-id="@Model.Uposlenik.Id"
+                       class="btn btn-primary">Uredi</a>
+                    <a asp-controller="home" asp-action="delete" asp-route-id="@Model.Uposlenik.Id"
+                       class="btn btn-light btn-outline-primary m-1">Izbriši</a>
+
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

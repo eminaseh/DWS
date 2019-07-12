@@ -1,0 +1,159 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/style1.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+
+    <title>@ViewData["Title"] - Apoteka</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3 ">
+            <div class="container">
+                <a class="navbar-brand  text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" style="width:60px;height:44px;"/>
+                </a>
+               
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                   
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Naslovna</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Lijek" asp-action="List">Lijekovi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="About" asp-action="Index">O nama</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Contact" asp-action="Index">Kontakt</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Novosti" asp-action="Index">Novosti</a>
+                        </li>
+
+
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            if (User.IsInRole("Admin") || User.IsInRole("Uposlenik"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Dodaj">Dodaj uposlenika</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Lijek" asp-action="Create">Dodaj lijek</a>
+                                </li>
+                            }
+                        }
+
+
+                    </ul>
+                    <ul class="navbar-nav  ml-auto ">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                        <li class="nav-item">
+                            <form method="post" asp-action="Logout" asp-controller="Account">
+                                <button type="submit" class="nav-link text-white btn btn-link " style="width:auto">
+                                    Odjavi se @User.Identity.Name
+
+                                </button>
+                            </form>
+                        </li >
+                        if (User.IsInRole("Admin"))
+                         {
+                         <li class="nav-item">
+                            <a class="nav-link text-white" casp-area="" asp-controller="Administration" asp-action="Index">Admin</a>
+                         </li>
+                          }
+
+                            else if (User.IsInRole("Uposlenik"))
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link text-white" casp-area="">Uposlenik</a>
+                            </li>
+                        }
+
+
+                        } else
+                        {
+                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register">Registruj se</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Prijavi se</a>
+                        </li>
+                        
+                        }
+                       
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+        
+    </header>
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer  text-white bg-primary ">
+        <div class="container d-flex flex-row ">
+            <div class="">Copyright  &copy; 2019 - Apoteka - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privatnost</a></div>
+            <div class="ml-auto"><a class="text-white" href="#top"><i class="fas fa-arrow-up"></i></a></div>
+            
+        </div>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿@model Lijek
+
+@{
+
+    ViewData["Title"] = "Dodaj lijek";
+
+}
+
+      <h2 class="text-center text-secondary m-4">Dodaj lijek</h2>
+
+      <form enctype="multipart/form-data" asp-controller="Lijek" asp-action="Create" method="post" class="mt-5">
+
+          <div class="form-group row">
+              <label asp-for="NazivLijeka" class="col-sm-2 col-form-label">Naziv Lijeka</label>
+              <div class="col-sm-10">
+                  <input asp-for="NazivLijeka" class="form-control" placeholder="Naziv lijeka">
+                  <span asp-validation-for="NazivLijeka" class="text-danger"></span>
+              </div>
+          </div>
+
+          <div class="form-group row">
+              <label asp-for="OblikLijeka" class="col-sm-2 col-form-label">Oblik lijeka</label>
+              <div class="col-sm-10">
+                  <input asp-for="OblikLijeka" class="form-control" placeholder="Oblik lijeka">
+                  <span asp-validation-for="OblikLijeka" class="text-danger"></span>
+              </div>
+          </div>
+
+          <div class="form-group row">
+              <label asp-for="PakovanjeLijeka" class="col-sm-2 col-form-label">Pakovanje lijeka</label>
+              <div class="col-sm-10">
+                  <input asp-for="PakovanjeLijeka" class="form-control" placeholder="Pakovanje lijeka">
+                  <span asp-validation-for="PakovanjeLijeka" class="text-danger"></span>
+              </div>
+          </div>
+
+          <div class="form-group row">
+              <label asp-for="Cijena" class="col-sm-2 col-form-label">Cijena</label>
+              <div class="col-sm-10">
+                  <input asp-for="Cijena" class="form-control" placeholder="Cijena">
+                  <span asp-validation-for="Cijena" class="text-danger"></span>
+              </div>
+          </div>
+
+          <div class="form-group row">
+              <label asp-for="Primjena" class="col-sm-2 col-form-label">Primjena</label>
+              <div class="col-sm-10">
+                  <textarea asp-for="Primjena" class="form-control" placeholder="Primjena"> </textarea>
+                  <span asp-validation-for="Primjena" class="text-danger"></span>
+              </div>
+          </div>
+
+          <div class="form-group row">
+              <label asp-for="Kategorija" class="col-sm-2 col-form-label">Kategorija</label>
+              <div class="col-sm-10">
+                  <select asp-for="KategorijaId" class="custom-select mr-sm-2 text-secondary" asp-items="ViewBag.KategorijaId">
+                      <option value="6">Bez recepta</option>
+                      <option value="7">Recept</option>
+                  </select>
+              </div>
+
+          </div>
+
+          <div class="form-group row mt-5">
+              <label asp-for="NaStanju" class="col-sm-2 col-form-label">Na stanju</label>
+              <div class="col-sm-10">
+                  @Html.RadioButtonFor(x => x.NaStanju, true) Da
+                  @Html.RadioButtonFor(x => x.NaStanju, false) Ne
+              </div>
+          </div>
+
+          <div class="form-group row mt-5">
+              <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Dodaj</button>
+              </div>
+          </div>
+
+      </form>
+

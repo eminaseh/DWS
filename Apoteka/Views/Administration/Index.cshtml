@@ -1,0 +1,45 @@
+﻿@model IEnumerable<IdentityRole>
+
+<h2 class="text-center text-secondary m-5">Role</h2>
+
+<a asp-action="CreateRole" class="btn btn-primary mb-5" style="width:auto">Napravi novu rolu</a>
+<a asp-action="Users" class="btn btn-primary mb-5" style="width:150px">Svi korisnici</a>
+
+<div class="table-responsive ">
+    <table class="table  table-hover border-primary border-bottom">
+        <thead>
+            <tr class=" text-primary ">
+
+              
+                <th scope="col">Rola</th>
+                <th scope="col">Korisnici u roli</th>
+                <th scope="col">Uredi rolu</th>
+                <th scope="col">Izbrši rolu</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                   
+                    <td>@role.Name</td>
+                    <td i-role="@role.Id"></td>
+
+                    <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Uredi</a></td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">
+                                Izbriši
+                            </button>
+                        </form>
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

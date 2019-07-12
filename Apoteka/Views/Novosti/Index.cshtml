@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Vijest>
+
+@{
+    ViewData["Title"] = "Novosti";
+}
+
+
+<h1 class="text-center text-secondary m-4">Novosti</h1>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Uposlenik"))
+{
+    <a asp-action="AddVijest" class="btn  btn-primary" style="width:auto">Dodaj vijest</a>
+}
+    <a asp-action="GetVijest" class="btn btn-primary" style="width:auto">Vidi određenu vijest</a>
+
+
+    <div class="card-deck">
+        @foreach (var v in Model)
+        {
+
+            <div class="card m-3 border-white" style="min-width:60%;">
+                <div class="card-header border-white bg-light">
+                    <h3 class="text-secondary border-white">@v.Naslov <br /></h3>
+                </div>
+                <div class="card-body border-white">
+                    <br />
+                    <p class="m-2">Id : @v.Id</p>
+                    <p class="m-2">@v.Opis</p>
+
+                </div>
+                <div class="card-footer border-white bg-white text-center">
+                    <div>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Uposlenik"))
+                        {
+                            <a asp-action="UpdateVijest" asp-route-id="@v.Id" style="width:auto" class="btn btn-primary m-1">Uredi (Put)</a>
+                            <a asp-action="UpdateVijestPatch" class="btn btn-primary m-1" style="width:auto" asp-route-id="@v.Id">Uredi (Patch)</a>
+                            <form asp-action="DeleteVijest" method="post">
+                                <input type="hidden" value="@v.Id" name="VijestId" />
+                                <input type="submit" value="Izbriši" class="btn  btn-primary m-1" />
+                            </form>
+                        }
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        }
+    </div>
+
+

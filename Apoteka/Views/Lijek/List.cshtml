@@ -1,0 +1,53 @@
+﻿@model LijekListViewModel
+
+@{
+    ViewData["Title"] = "Lijekovi";
+}
+<br />
+<form asp-controller="Lijek" asp-action="Search" class="form-inline my-2 my-lg-0 ">
+    <p>
+        <input type="text" name="SearchString" placeholder="Pretraži lijekove.." class="form-control mr-sm-2" style="width:400px">
+        <input type="submit" value="Search" class="btn btn-outline-primary my-2 my-sm-0"/>
+    </p>
+</form>
+ 
+        @await Component.InvokeAsync("KategorijaMenu")
+  
+
+<h2 class="text-center text-secondary m-5">@Model.TrenutnaKategorija</h2>
+
+<div class="table-responsive">
+    <table class="table  table-hover border-primary border-bottom">
+        <thead>
+            <tr class=" text-primary ">
+
+                <th scope="col">Naziv lijeka</th>
+                <th scope="col">Oblik lijeka</th>
+                <th scope="col">Pakovanje lijeka</th>
+                <th scope="col">Cijena</th>
+                <th scope="col">Režim propisivanja lijeka</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lijek in Model.Lijekovi)
+            {
+                <tr>
+                    <td>@lijek.NazivLijeka</td>
+                    <td>@lijek.OblikLijeka</td>
+                    <td>@lijek.PakovanjeLijeka</td>
+                    <td>@lijek.Cijena.ToString("c")</td>
+                    <td>@lijek.Kategorija.OpisKategorije</td>
+                    <td>
+                        <a asp-controller="Lijek" asp-action="Details" asp-route-id="@lijek.LijekId">Detalji</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Uposlenik"))
+                        {
+                            <a asp-controller="Lijek" asp-action="Edit" asp-route-id="@lijek.LijekId"> Uredi </a>
+                            <a asp-controller="Lijek" asp-action="Delete" asp-route-id="@lijek.LijekId">Izbriši</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

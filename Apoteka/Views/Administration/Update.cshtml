@@ -1,0 +1,58 @@
+﻿@model RoleEdit
+
+ <h2 class="text-center text-secondary m-5">Dodaj korisnike u rolu</h2>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+    <h2 class="text-secondary mb-3 mt-3">Dodaj u rolu @Model.Role.Name</h2>
+
+    <table class="table  table-hover border-primary border-bottom">
+        @if (Model.NonMembers.Count() == 0)
+        {
+            <tr><td colspan="2">Svi korisnici su članovi</td></tr>
+        }
+        else
+        {
+            @foreach (ApplicationUser user in Model.NonMembers)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="AddIds" value="@user.Id">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <h2 class="text-secondary mb-3 mt-5">Ukloni iz role @Model.Role.Name</h2>
+
+    <table class="table  table-hover border-primary border-bottom">
+        @if (Model.Members.Count() == 0)
+        {
+            <tr><td colspan="2">Nema članova</td></tr>
+        }
+        else
+        {
+            @foreach (ApplicationUser user in Model.Members)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="DeleteIds" value="@user.Id">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    
+    <button type="submit" class="btn btn-primary mt-5">Sačuvaj</button>
+
+    <a asp-controller="administration" asp-action="index" class="btn btn-primary mt-5">Poništi</a>
+
+</form>

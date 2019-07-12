@@ -1,0 +1,15 @@
+﻿@model int
+
+@{
+
+    ViewData["Title"] = "404 Error";
+
+}
+    <br />
+<div class="alert alert-danger mt-1 mb-1">
+    <h4>Not Found Error : </h4><hr />
+    <h5>Uposlenik koji ima Id = @Model ne može biti pronađen.</h5>
+
+</div>
+<br /><br />
+<a asp-controller="home" asp-action="index" class="btn btn-outline-primary" style="width:auto">Lista svih uposlenika</a>

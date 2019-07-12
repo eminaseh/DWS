@@ -1,0 +1,81 @@
+﻿@model UposleniciEditViewModel
+
+@{
+
+    ViewData["Title"] = "Uredi uposlenika";
+    var photoPath = "~/Images/" + (Model.ExistingPhotoPath ?? "avtar.png");
+
+}
+
+<h2 class="text-center text-secondary m-4">Uredi uposlenika</h2>
+
+<form enctype="multipart/form-data" asp-controller="Home" asp-action="Edit" method="post" class="mt-5">
+
+    <input hidden asp-for="Id"/>
+    <input hidden asp-for="ExistingPhotoPath" />
+    
+    <div class="form-group row">
+        <label asp-for="Ime" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Ime" class="form-control" placeholder="Ime">
+            <span asp-validation-for="Ime" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Prezime" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Prezime" class="form-control" placeholder="Prezime">
+            <span asp-validation-for="Prezime" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" placeholder="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="RadnoMjesto" class="col-sm-2 col-form-label">Radno mjesto</label>
+        <div class="col-sm-10">
+            <select asp-for="RadnoMjesto" asp-items="Html.GetEnumSelectList<RadnoM>()" class="custom-select mr-sm-2"></select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Slika" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="Slika" class="form-control custom-file-input">
+                <label class="custom-file-label">Promijeni sliku...</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row col-sm-4 offset-4 mt-4">  
+    <img src="@photoPath" class="imageThumbnail" asp-append-version="true" />
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10 ">
+            <button type="submit" class="btn btn-primary">Potvrdi</button>
+            <a asp-controller="home" asp-action="index" class="btn btn-primary">Poništi</a>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <script>
+                  $(document).ready(function () {
+                      $('.custom-file-input').on("change", function () {
+                          var fileName = $(this).val().split("\\").pop();
+                          $(this).next('.custom-file-label').html(fileName);
+                      });
+                  });
+        </script>
+    }
+
+</form>

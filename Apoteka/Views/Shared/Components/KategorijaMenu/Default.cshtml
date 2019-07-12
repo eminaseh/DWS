@@ -1,0 +1,25 @@
+﻿
+
+
+<br />
+<div >
+    <div class="btn-group" style="">
+        <button type="button" style="width:160px;" class="btn btn-primary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorija</button>
+        <div class="dropdown-menu">
+           
+
+
+             @foreach (var kategorija in Model)
+        {
+            
+                <a class="text-primary dropdown-item " asp-area="" asp-controller="Lijek" asp-action="List"
+                   asp-route-kategorija="@kategorija.NazivKategorije">@kategorija.NazivKategorije</a>
+            
+        }
+         <div class="dropdown-divider"></div>
+         
+             <a class="text-primary dropdown-item" asp-area="" asp-controller="Lijek" asp-action="List" asp-route-kategorija="">Svi lijekovi</a>
+         
+        </div>
+    </div>
+</div>
